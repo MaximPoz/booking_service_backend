@@ -121,8 +121,9 @@ router.post("/login", async (request, response) => {
             // httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 24 * 60 * 60 * 1000, // 1 день
-            sameSite: 'Lax'
+            // sameSite: 'Lax'
           });
+          console.log(token)
           return response.status(200).json({ message: "Успешно авторизован" });
         } else {
           return response
