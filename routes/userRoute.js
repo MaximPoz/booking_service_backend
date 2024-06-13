@@ -62,7 +62,47 @@ router.post("/registration", async (request, response) => {
   return response.json({ message: "Пользователь успешно создан" });
 });
 
-//!Авторизация
+// //!Авторизация
+// router.post("/login", async (request, response) => {
+//   const { email, password } = request.body;
+
+//   try {
+//     const user = await User.findOne({ email: email });
+//     console.log(user)
+
+//     if (user) {
+//       bcrypt.compare(password, user.password, (err, resp) => {
+//         // Сравниваем введенный пароль с хэшированным паролем пользователя
+
+//         if (resp) {
+//           const token = jwt.sign(
+//             // Генерируем JWT токен для пользователя
+//             { email: user.email, id: user._id, user: user.firstName }, //Полезная нагрузка токена
+//             jwt_secret, // Секретный ключ для подписи токена
+//             { expiresIn: "1d" } // Время жизни токена (1 день)
+//           );
+//           response.cookie("token", token); // Устанавливаем токен в куки ответа
+//           return response.status(200).json({ message: "Успешно авторизован" });
+//         } else {
+//           return response
+//             .status(405)
+//             .json({ message: "Пароль неправильный мой друг" });
+//         }
+//       });
+//     } else {
+//       return response
+//         .status(404)
+//         .json({ message: "Пользователь не существует" });
+//     }
+//   } catch (error) {
+//     console.error("Ошибка при поиске пользователя:", error);
+//     return response
+//       .status(500)
+//       .json({ message: "Ошибка при поиске пользователя" });
+//   }
+// });
+
+
 router.post("/login", async (request, response) => {
   const { email, password } = request.body;
 
@@ -71,16 +111,17 @@ router.post("/login", async (request, response) => {
 
     if (user) {
       bcrypt.compare(password, user.password, (err, resp) => {
-        // Сравниваем введенный пароль с хэшированным паролем пользователя
-
         if (resp) {
           const token = jwt.sign(
-            // Генерируем JWT токен для пользователя
-            { email: user.email, id: user._id, user: user.firstName }, //Полезная нагрузка токена
-            jwt_secret, // Секретный ключ для подписи токена
-            { expiresIn: "1d" } // Время жизни токена (1 день)
+            { email: user.email, id: user._id, user: user.firstName },
+            jwt_secret,
+            { expiresIn: "1d" }
           );
-          response.cookie("token", token); // Устанавливаем токен в куки ответа
+          response.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 24 * 60 * 60 * 1000 // 1 день
+          });
           return response.status(200).json({ message: "Успешно авторизован" });
         } else {
           return response
