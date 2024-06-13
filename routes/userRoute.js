@@ -108,9 +108,10 @@ router.post("/login", async (request, response) => {
 
   try {
     const user = await User.findOne({ email: email });
-
+    console.log(user)
     if (user) {
       bcrypt.compare(password, user.password, (err, resp) => {
+        console.log(err, resp)
         if (resp) {
           const token = jwt.sign(
             { email: user.email, id: user._id, user: user.firstName },
@@ -136,7 +137,7 @@ router.post("/login", async (request, response) => {
         .json({ message: "Пользователь не существует" });
     }
   } catch (error) {
-    console.error("Ошибка при поиске пользователя:", error);
+    // console.error("Ошибка при поиске пользователя:", error);
     return response
       .status(500)
       .json({ message: "Ошибка при поиске пользователя" });
@@ -151,7 +152,7 @@ router.get("/:_id", async (request, response) => {
 
     return response.status(200).json(user);
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
 
     response.status(500).send({ message: error.message });
   }
