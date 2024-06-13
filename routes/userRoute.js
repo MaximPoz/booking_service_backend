@@ -160,7 +160,7 @@ router.get("/:_id", async (request, response) => {
 
 //!Обновления данных в карточке пользователя по id
 router.put("/:id", async (request, response) => {
-  console.log(request.body);
+  // console.log(request.body);
   try {
     const { id } = request.params;
     
@@ -175,7 +175,7 @@ router.put("/:id", async (request, response) => {
     // Сохраняем обновленные данные
     await result.save();
 
-    console.log("Результат обновления:", result);
+    // console.log("Результат обновления:", result);
 
     if (!result) {
       return response
@@ -187,7 +187,7 @@ router.put("/:id", async (request, response) => {
       .status(200)
       .send({ message: "Карточка пользователя успешно обновлена" });
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     response.status(500).send({ message: `Ошибка: ${error.message}` });
   }
 });
@@ -214,7 +214,7 @@ router.post("/send-pin", async (req, res) => {
   user.pinCode = pinCode;
   await user.save();
 
-  console.log("pinCode:", user.pinCode);
+  // console.log("pinCode:", user.pinCode);
 
   // Отправляем письмо с пин-кодом
   const transporter = nodemailer.createTransport({
@@ -239,7 +239,7 @@ router.post("/send-pin", async (req, res) => {
 //!Сверка pin-code
 router.post("/check-pin", async (req, res) => {
   const { email, pinCode } = req.body;
-  console.log(email);
+  // console.log(email);
   // Проверяем, существует ли пользователь с указанным E-mail
   const user = await User.findOne({ email });
   if (!user) {
@@ -247,8 +247,8 @@ router.post("/check-pin", async (req, res) => {
       .status(400)
       .json({ message: "Пользователь с таким E-mail не найден" });
   }
-  console.log(pinCode);
-  console.log(user.pinCode);
+  // console.log(pinCode);
+  // console.log(user.pinCode);
 
   // Обновляем пин-код пользователя в базе данных
   if (user.pinCode == pinCode) {

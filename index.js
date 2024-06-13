@@ -41,7 +41,7 @@ app.use('/users', userRoute);
 
 // Обработчик маршрута GET "/" для приветственного сообщения
 app.get("/", (request, response) => {
-  console.log(request);
+  // console.log(request);
   return response.status(234).send("Добро пожаловать!");
 });
 

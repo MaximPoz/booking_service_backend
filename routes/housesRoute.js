@@ -39,7 +39,7 @@ router.post("/", async (request, response) => {
     return response.status(201).send(house);
   } catch (error) {
     // Обработка ошибки, если что-то пошло не так при создании дома
-    console.log(`Что то пошло не так ${error.message}`);
+    // console.log(`Что то пошло не так ${error.message}`);
     // Отправка сообщения об ошибке в ответе с кодом состояния 500
     response.status(500).send({ message: error.message });
   }
@@ -57,7 +57,7 @@ router.get("/", async (request, response) => {
     });
   } catch (error) {
     // Обработка ошибки, если что-то пошло не так при получении домов
-    console.log(error.message);
+    // console.log(error.message);
     // Отправка сообщения об ошибке в ответе с кодом состояния 500
     response.status(500).send({ message: error.message });
   }
@@ -71,7 +71,7 @@ router.get("/:_id", async (request, response) => {
 
     return response.status(200).json(house);
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
 
     response.status(500).send({ message: error.message });
   }
@@ -105,7 +105,7 @@ router.put("/:id", async (request, response) => {
       .status(200)
       .send({ message: "Карточка дома успешно обновлена" });
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     response.status(500).send({ message: `Ошибка: ${error.message}` });
   }
 });
@@ -125,7 +125,7 @@ router.delete("/:id", async (request, response) => {
       .status(200)
       .send({ message: "Карточка дома успешно удалена " });
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     response.status(500).send({ message: `Ошибка: ${error.message}` });
   }
 });
