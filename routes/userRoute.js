@@ -118,9 +118,10 @@ router.post("/login", async (request, response) => {
             { expiresIn: "1d" }
           );
           response.cookie("token", token, {
-            httpOnly: true,
+            // httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            maxAge: 24 * 60 * 60 * 1000 // 1 день
+            maxAge: 24 * 60 * 60 * 1000, // 1 день
+            sameSite: 'Lax'
           });
           return response.status(200).json({ message: "Успешно авторизован" });
         } else {
