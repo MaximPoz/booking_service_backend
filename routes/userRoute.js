@@ -118,10 +118,8 @@ router.post("/login", async (request, response) => {
             { expiresIn: "1d" }
           );
           response.cookie("token", token, {
-            // httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 24 * 60 * 60 * 1000, // 1 день
-            // sameSite: 'Lax'
           });
           console.log(token)
           return response.status(200).json({ message: "Успешно авторизован" });
@@ -137,7 +135,7 @@ router.post("/login", async (request, response) => {
         .json({ message: "Пользователь не существует" });
     }
   } catch (error) {
-    // console.error("Ошибка при поиске пользователя:", error);
+    console.error("Ошибка при поиске пользователя:", error);
     return response
       .status(500)
       .json({ message: "Ошибка при поиске пользователя" });
@@ -152,7 +150,7 @@ router.get("/:_id", async (request, response) => {
 
     return response.status(200).json(user);
   } catch (error) {
-    // console.log(error.message);
+    console.log(error.message);
 
     response.status(500).send({ message: error.message });
   }
@@ -160,7 +158,6 @@ router.get("/:_id", async (request, response) => {
 
 //!Обновления данных в карточке пользователя по id
 router.put("/:id", async (request, response) => {
-  // console.log(request.body);
   try {
     const { id } = request.params;
     
