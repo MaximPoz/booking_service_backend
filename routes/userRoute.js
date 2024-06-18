@@ -108,7 +108,7 @@ router.post("/login", async (request, response) => {
 
   try {
     const user = await User.findOne({ email: email });
-    console.log(jwt_secret)
+    console.log(jwt_secret);
     if (user) {
       bcrypt.compare(password, user.password, (err, resp) => {
         if (resp) {
@@ -117,12 +117,12 @@ router.post("/login", async (request, response) => {
             jwt_secret,
             { expiresIn: "1d" }
           );
-          response.cookie("token", token, {
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 24 * 60 * 60 * 1000, // 1 день
+          console.log(token);
+          // Отправляем токен в теле ответа
+          return response.status(200).json({ 
+            message: "Успешно авторизован",
+            token
           });
-          console.log(token)
-          return response.status(200).json({ message: "Успешно авторизован" });
         } else {
           return response
             .status(405)
