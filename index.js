@@ -27,7 +27,7 @@ app.use(express.json());
 //включаем `CORS` для localhost:3000 и методам
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://booking-service-frontend-pi.vercel.app/"],
+    origin: ['https://booking-service-frontend-pi.vercel.app', "http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   })
